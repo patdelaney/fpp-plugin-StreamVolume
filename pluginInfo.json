@@ -1,0 +1,20 @@
+{
+	"repoName": "fpp-plugin-StreamVolume",
+	"name": "Stream Volume Faders",
+	"author": "KulpLights",
+	"description": "Adds a control page with a volume fader for the primary audio output plus each independent fppd media stream slot, so you can see and adjust every stream's volume live.",
+	"homeURL": "https://github.com/KulpLights/fpp-plugin-StreamVolume",
+	"srcURL": "https://github.com/KulpLights/fpp-plugin-StreamVolume.git",
+	"bugURL": "https://github.com/KulpLights/fpp-plugin-StreamVolume/issues",
+	"iconURL": "https://raw.githubusercontent.com/KulpLights/fpp-plugin-StreamVolume/main/icon.png",
+	"allowUpdates": 1,
+	"versions": [
+		{
+			"minFPPVersion": "10.0",
+			"maxFPPVersion": "0",
+			"branch": "main",
+			"sha": "",
+			"allowUpdates": 1
+		}
+	]
+}
