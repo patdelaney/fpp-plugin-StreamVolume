@@ -25,10 +25,10 @@
 
 <fieldset class="border rounded p-3">
 	<legend class="w-auto px-2 fs-6">Info</legend>
-	<p>Developed by KulpLights.</p>
+	<p>Developed by patdelaney.</p>
 	<p>
-		<a href="https://github.com/KulpLights/fpp-plugin-StreamVolume" target="_blank">GitHub Repository</a>
+		<a href="https://github.com/patdelaney/fpp-plugin-StreamVolume" target="_blank">GitHub Repository</a>
 		&nbsp;|&nbsp;
-		<a href="https://github.com/KulpLights/fpp-plugin-StreamVolume/issues" target="_blank">Report a Bug</a>
+		<a href="https://github.com/patdelaney/fpp-plugin-StreamVolume/issues" target="_blank">Report a Bug</a>
 	</p>
 </fieldset>
