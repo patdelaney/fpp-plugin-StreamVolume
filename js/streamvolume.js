@@ -8,6 +8,10 @@
  * slot). Since fppd doesn't persist a per-slot volume, the last value chosen
  * for slots 2-5 is kept in localStorage and re-applied automatically the
  * moment a slot's status flips from idle to playing.
+ *
+ * The Mute button on each row sets that stream's volume to 0 and, on the
+ * next click, restores the last non-zero volume seen for it (also tracked
+ * in localStorage, since fppd has no concept of mute distinct from volume).
  */
 (function () {
     'use strict';
@@ -16,6 +20,7 @@
     var SLIDER_DEBOUNCE_MS = 150;
     var MAX_SLOT = 5;
     var STORAGE_PREFIX = 'fppStreamVolume_slot_';
+    var PREMUTE_STORAGE_PREFIX = 'fppStreamVolume_premute_';
 
     var extraSlotsAvailable = true; // optimistic until the first probe says otherwise
     var slotActive = {};
@@ -45,6 +50,46 @@
         }
     }
 
+    // Remembers the last non-zero volume seen for a slot, so the Mute button
+    // has something sensible to restore to on Unmute.
+    function loadPreMuteVolume(slot) {
+        try {
+            var v = window.localStorage.getItem(PREMUTE_STORAGE_PREFIX + slot);
+            if (v !== null) {
+                var n = parseInt(v, 10);
+                if (!isNaN(n) && n > 0) {
+                    return Math.min(100, n);
+                }
+            }
+        } catch (e) {
+            // localStorage unavailable - fall through to default
+        }
+        return 70;
+    }
+
+    function storePreMuteVolume(slot, value) {
+        if (value <= 0) {
+            return;
+        }
+        try {
+            window.localStorage.setItem(PREMUTE_STORAGE_PREFIX + slot, value);
+        } catch (e) {
+            // ignore
+        }
+    }
+
+    function updateMuteButton(slot, value) {
+        var btn = document.getElementById('streamVolumeMuteBtn_' + slot);
+        var icon = document.getElementById('streamVolumeMuteIcon_' + slot);
+        if (!btn || !icon) {
+            return;
+        }
+        var muted = value <= 0;
+        btn.className = 'btn btn-sm ' + (muted ? 'btn-danger' : 'btn-outline-secondary');
+        btn.title = muted ? 'Unmute' : 'Mute';
+        icon.className = 'fas ' + (muted ? 'fa-volume-mute' : 'fa-volume-up');
+    }
+
     function setSliderValue(slot, value) {
         var input = document.getElementById('streamVolumeSlider_' + slot);
         var label = document.getElementById('streamVolumeLabel_' + slot);
@@ -54,6 +99,7 @@
         if (label) {
             label.textContent = value + '%';
         }
+        updateMuteButton(slot, value);
     }
 
     function setSlotStatus(slot, active, filename) {
@@ -96,6 +142,7 @@
         var value = parseInt(input.value, 10);
         setSliderValue(slot, value);
         storeVolume(slot, value);
+        storePreMuteVolume(slot, value);
         sliderDragging[slot] = true;
 
         if (debounceTimers[slot]) {
@@ -118,6 +165,21 @@
         setTimeout(function () {
             sliderDragging[slot] = false;
         }, SLIDER_DEBOUNCE_MS + 50);
+    }
+
+    function onMuteToggle(slot) {
+        var input = document.getElementById('streamVolumeSlider_' + slot);
+        var current = parseInt(input.value, 10);
+        var newValue;
+        if (current > 0) {
+            storePreMuteVolume(slot, current);
+            newValue = 0;
+        } else {
+            newValue = loadPreMuteVolume(slot);
+        }
+        setSliderValue(slot, newValue);
+        storeVolume(slot, newValue);
+        applySlotVolume(slot, newValue);
     }
 
     function refreshMasterVolume() {
@@ -199,4 +261,5 @@
 
     window.StreamVolumeSliderInput = onSliderInput;
     window.StreamVolumeSliderChange = onSliderChange;
+    window.StreamVolumeMuteToggle = onMuteToggle;
 })();

@@ -29,10 +29,14 @@
 		</thead>
 		<tbody>
 			<tr id="streamVolumeRow_1">
-				<td class="fw-semibold">Master / Primary</td>
-				<td><span id="streamVolumeStatus_1" class="badge text-bg-success">Active</span></td>
-				<td>
+				<td class="fw-semibold py-3">Master / Primary</td>
+				<td class="py-3"><span id="streamVolumeStatus_1" class="badge text-bg-success">Active</span></td>
+				<td class="py-3">
 					<div class="d-flex align-items-center gap-2">
+						<button type="button" class="btn btn-sm btn-outline-secondary"
+							id="streamVolumeMuteBtn_1" onclick="StreamVolumeMuteToggle(1)" title="Mute">
+							<i class="fas fa-volume-up" id="streamVolumeMuteIcon_1"></i>
+						</button>
 						<input type="range" class="form-range" min="0" max="100" value="70"
 							id="streamVolumeSlider_1"
 							oninput="StreamVolumeSliderInput(1)"
@@ -45,10 +49,14 @@
 		<tbody id="streamVolumeExtraSlots">
 			<?php for ($slot = 2; $slot <= 5; $slot++): ?>
 			<tr id="streamVolumeRow_<?= $slot ?>">
-				<td class="fw-semibold">Stream Slot <?= $slot ?></td>
-				<td><span id="streamVolumeStatus_<?= $slot ?>" class="badge text-bg-secondary">Idle</span></td>
-				<td>
+				<td class="fw-semibold py-3">Stream Slot <?= $slot ?></td>
+				<td class="py-3"><span id="streamVolumeStatus_<?= $slot ?>" class="badge text-bg-secondary">Idle</span></td>
+				<td class="py-3">
 					<div class="d-flex align-items-center gap-2">
+						<button type="button" class="btn btn-sm btn-outline-secondary"
+							id="streamVolumeMuteBtn_<?= $slot ?>" onclick="StreamVolumeMuteToggle(<?= $slot ?>)" title="Mute">
+							<i class="fas fa-volume-up" id="streamVolumeMuteIcon_<?= $slot ?>"></i>
+						</button>
 						<input type="range" class="form-range" min="0" max="100" value="70"
 							id="streamVolumeSlider_<?= $slot ?>"
 							oninput="StreamVolumeSliderInput(<?= $slot ?>)"
