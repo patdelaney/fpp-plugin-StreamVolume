@@ -34,15 +34,15 @@
 		<thead>
 			<tr>
 				<th>Stream</th>
-				<th>Status</th>
-				<th>Volume</th>
+				<th class="ps-4">Status</th>
+				<th class="ps-4">Volume</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr id="streamVolumeRow_1">
 				<td class="fw-semibold py-3">Master / Primary</td>
-				<td class="py-3"><span id="streamVolumeStatus_1" class="badge text-bg-success">Active</span></td>
-				<td class="py-3">
+				<td class="py-3 ps-4"><span id="streamVolumeStatus_1" class="badge text-bg-success">Active</span></td>
+				<td class="py-3 ps-4">
 					<div class="d-flex align-items-center gap-2">
 						<button type="button" class="btn btn-sm btn-outline-secondary"
 							id="streamVolumeMuteBtn_1" onclick="StreamVolumeMuteToggle(1)" title="Mute">
@@ -61,8 +61,8 @@
 			<?php for ($slot = 2; $slot <= 5; $slot++): ?>
 			<tr id="streamVolumeRow_<?= $slot ?>">
 				<td class="fw-semibold py-3">Stream Slot <?= $slot ?></td>
-				<td class="py-3"><span id="streamVolumeStatus_<?= $slot ?>" class="badge text-bg-secondary">Idle</span></td>
-				<td class="py-3">
+				<td class="py-3 ps-4"><span id="streamVolumeStatus_<?= $slot ?>" class="badge text-bg-secondary">Idle</span></td>
+				<td class="py-3 ps-4">
 					<div class="d-flex align-items-center gap-2">
 						<button type="button" class="btn btn-sm btn-outline-secondary"
 							id="streamVolumeMuteBtn_<?= $slot ?>" onclick="StreamVolumeMuteToggle(<?= $slot ?>)" title="Mute">
